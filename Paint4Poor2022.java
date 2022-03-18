@@ -15,9 +15,11 @@ public class Paint4Poor2022 extends Application {
   private Pane root;                // global definiert für späteren Zugriff
   private Pixel[][] leinwand;       // Ein Array aus erweiterten Buttons
   private Color[][] bild;           // Ein reines Farb-Array
-  private String grundStyle = "-fx-border-width: 0;-fx-background-radius: 0;-fx-border-color:LIGHTGRAY;-fx-border-insets: 0;-fx-border-radius: 0;"; // für alle Pixel 
+  private String grundStyle = "-fx-border-width: 0;-fx-background-radius: 0;-fx-border-color:LIGHTGRAY;-fx-border-insets: 0;-fx-border-radius: 0;"; // für alle Pixel
+  private String geloeschterStyle = grundStyle + "-fx-background-color: #FFFFFF"; 
   private Color aktuelleFarbe = Color.BLACK;
   private ColorPicker colorPicker1 = new ColorPicker();
+  private Button bLoeschen = new Button();
   // Ende Attribute
   
   
@@ -50,12 +52,23 @@ public class Paint4Poor2022 extends Application {
   // Das wird alles einmal beim Starten ausgeführt
   public void start(Stage primaryStage) { 
     root = new Pane();
-    Scene scene = new Scene(root, 640, 508);
+    Scene scene = new Scene(root, 640, 512);
+    // Anfang Komponenten
+    bLoeschen.setOnAction(
+      (event) -> {bLoeschen_Action(event);} 
+    );
+    bLoeschen.setLayoutX(500);
+    bLoeschen.setLayoutY();
+    bLoeschen.setPrefHeight(25);
+    bLoeschen.setPrefWidth(100);                                                  
+    bLoeschen.setText("Alles löschen");
+    root.getChildren().add(bLoeschen);
+    // Ende Komponenten
     
     colorPicker1.setLayoutX(500);
     colorPicker1.setLayoutY(44);
     colorPicker1.setPrefHeight(25);
-    colorPicker1.setPrefWidth(96);
+    colorPicker1.setPrefWidth(100);
     root.getChildren().add(colorPicker1);
    
     // erzeugen des "Array of Button" sowie initialiseren von bild[][]
@@ -86,6 +99,14 @@ public class Paint4Poor2022 extends Application {
   } 
   
   // Button zum Löschen des gesamten Bildes
+  public void bLoeschen_Action(Event evt) {
+    for(int i = 0; i < leinwand.length; i++){
+      for(int y = 0; y < leinwand[i].length; y++){
+        leinwand[i][y].setStyle(geloeschterStyle);
+      }
+    }
+  }
+
   // Ende Methoden
 } 
 
